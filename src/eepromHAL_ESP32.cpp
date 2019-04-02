@@ -4,17 +4,18 @@
 /*                                                                               */
 /*  version    Date     Description                                              */
 /*    1.0    01/04/19                                                            */
+/*    1.0.1  02/04/19   Ajout fonction init                                      */
 /*                                                                               */
 /*********************************************************************************/
 
-#include "eepromHAL.h"
+//#include "eepromHAL.h"
 #include "eepromHAL_ESP32.h"
 #include <Arduino.h>
 
 #if defined(ESP32)
 #include <EEPROM.h>
 
-#if not defined(VARIO_SETTINGS_H)
+#if not defined(DEBUG_H)
 //Monitor Port 
 #define SerialPort Serial
 
@@ -24,12 +25,20 @@
 
 #define EEPROM_SIZE 64
 
-EepromHal_ESP32::EepromHal_ESP32(void) 
+void EepromHal_ESP32::init(void) 
 {
+	
+	#if defined (EEPROM_DEBUG) 
+    SerialPort.println("initialise EEPROM"); 
+		SerialPort.flush();
+#endif //EEPROM_DEBUG
+
   if (!EEPROM.begin(EEPROM_SIZE))
   {
 #if defined (EEPROM_DEBUG) 
-    SerialPort.println("failed to initialise EEPROM"); delay(1000000);
+    SerialPort.println("failed to initialise EEPROM"); 
+		SerialPort.flush();
+		delay(1000000);
 #endif //EEPROM_DEBUG
   }	
 }
@@ -61,6 +70,4 @@ void EepromHal_ESP32::commit()
 {
 	EEPROM.commit();
 }
-
-EepromHal_ESP32 EEPROMHAL;
 #endif //ESP32

@@ -1,10 +1,8 @@
+#include <Arduino.h>
+
 #if defined(ARDUINO_ARCH_SAMD)
 #include <SDU.h>    //FIRMWARE Update
 #endif //ARDUINO_ARCH_SAMD
-
-#include <Arduino.h>
-
-#include "Debug.h"
 
 #include "eepromHAL.h"
 #if defined(ESP8266)
@@ -21,7 +19,7 @@
 
 #endif
 
-#if not defined(VARIO_SETTINGS_H)
+#if not defined(DEBUG_H)
 //Monitor Port 
 #if defined(ESP8266)
 #define SerialPort Serial
@@ -36,38 +34,45 @@
 #else
 #define SerialPort Serial
 #endif
-#endif //VARIO_SETTINGS_H
 
+#define EEPROM_DEBUG
+
+#endif //DEBUG_H
 
 /* The volume of the beeps, max = 10 */
-#define VARIOMETER_BEEP_VOLUME 4
+#define VARIOMETER_BEEP_VOLUME 5
 
 /* eeprom sound setting adresses */
 #define SOUND_EEPROM_TAG 9806
 #define SOUND_EEPROM_ADDR 0x30
 
+//EepromHal_ESP32 
+EepromHAL EepromHAL_DATA;
 
 void setup() {
-//READ DATA
+  SerialPort.begin(115200);
+  SerialPort.println("start...");
 
-  /* check tag */
+  EepromHAL_DATA.init();
+
+   /* check tag */
   uint16_t eepromTag;
   uint8_t tmpValue=0;
   
-  if (!EEPROMHAL.isValid()) {
+  if (!EepromHAL_DATA.isValid()) {
     SerialPort.println("EEPROM is empty, writing some example data:");
   } else {
     
-    eepromTag = EEPROMHAL.read(SOUND_EEPROM_ADDR);
+    eepromTag = EepromHAL_DATA.read(SOUND_EEPROM_ADDR);
     eepromTag <<= 8;
-    eepromTag += EEPROMHAL.read(SOUND_EEPROM_ADDR + 0x01);
+    eepromTag += EepromHAL_DATA.read(SOUND_EEPROM_ADDR + 0x01);
   
     uint8_t TmpValue;
     if( eepromTag != SOUND_EEPROM_TAG ) { 
       SerialPort.println("EEPROM Error EpromTag");
     } else {
       /* read calibration settings */
-      tmpValue =  EEPROMHAL.read(SOUND_EEPROM_ADDR + 0x02);
+      tmpValue =  EepromHAL_DATA.read(SOUND_EEPROM_ADDR + 0x02);
       SerialPort.print("Read sound value : ");
       SerialPort.println(tmpValue);
     }
@@ -78,12 +83,12 @@ void setup() {
 
   /* write tag */
   eepromTag = SOUND_EEPROM_TAG;
-  EEPROMHAL.write(SOUND_EEPROM_ADDR, (eepromTag>>8) & 0xff);
-  EEPROMHAL.write(SOUND_EEPROM_ADDR + 0x01, eepromTag & 0xff);
+  EepromHAL_DATA.write(SOUND_EEPROM_ADDR, (eepromTag>>8) & 0xff);
+  EepromHAL_DATA.write(SOUND_EEPROM_ADDR + 0x01, eepromTag & 0xff);
 
-  EEPROMHAL.write(SOUND_EEPROM_ADDR + 0x02 , VARIOMETER_BEEP_VOLUME);
+  EepromHAL_DATA.write(SOUND_EEPROM_ADDR + 0x02 , VARIOMETER_BEEP_VOLUME);
   
-  EEPROMHAL.commit();
+  EepromHAL_DATA.commit();  
 }
 
 void loop() {

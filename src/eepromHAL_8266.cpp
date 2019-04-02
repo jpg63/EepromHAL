@@ -13,27 +13,17 @@
 
 #if defined(ESP8266)
 #include <EEPROM.h>
-#endif //ESP8266
-#ifndef VARIO_SETTINGS_H
 
+
+#if not defined(DEBUG_H)
 //Monitor Port 
-#if defined(ESP8266)
 #define SerialPort Serial
-#elif defined(ESP32)
-
-#elif defined(ARDUINO_ARCH_SAMD)
-#define SerialPort SerialUSB
-#elif defined(_BOARD_GENERIC_STM32F103C_H_)
-
-#elif defined(ESP8266)
-#define SerialPort Serial
-#else
-#define SerialPort Serial
-#endif
 
 #define EEPROM_DEBUG
 
 #endif
+
+void EepromHal_8266::init(void) {}
 
 uint8_t EepromHal_8266::read(int address)
 {
@@ -65,6 +55,4 @@ void EepromHal_8266::commit()
 {
 }
 
-#if defined(ESP8266)
-EepromHal_8266 EEPROMHAL;
 #endif //ESP8266

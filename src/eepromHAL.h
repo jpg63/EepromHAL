@@ -1,3 +1,16 @@
+/*********************************************************************************/
+/*                                                                               */
+/*                           Libraries ToneHal                                   */
+/*                                                                               */
+/*  version    Date     Description                                              */
+/*    1.0    20/01/19                                                            */
+/*    1.1    24/01/19   Réecriture des classes                                   */
+/*                      répartition en plusieurs fichiers                        */
+/*    1.2    26/01/19   Modifications mineures                                   */
+/*    1.3    01/04/19   Ajout ESP32                                              */
+/*    1.3.1  02/04/19   Ajout fonction init                                      */
+/*                                                                               */
+/*********************************************************************************/
 #ifndef eepromHAL_h
 #define eepromHAL_h
 
@@ -8,6 +21,8 @@
 class EepromHal  {
 
   public:
+
+	  virtual void init(void) = 0;
 
     /**
      * Read an eeprom cell

@@ -14,13 +14,15 @@
 #if defined(ARDUINO_AVR_PRO)
 #include <EEPROM.h>
 
-#if not defined(VARIO_SETTINGS_H)
+#if not defined(DEBUG_H)
 //Monitor Port 
 #define SerialPort Serial
 
 #define EEPROM_DEBUG
 
 #endif
+
+void EepromHal_pro::init(void) {}
 
 uint8_t EepromHal_pro::read(int address)
 {
@@ -46,5 +48,4 @@ void EepromHal_pro::commit()
 {
 }
 
-EepromHal_pro EEPROMHAL;
 #endif //ARDUINO_AVR_PRO
