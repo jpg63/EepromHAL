@@ -10,6 +10,8 @@ class EepromHal_pro : public EepromHal {
 
   public:
 
+		void init(void);
+
     /**
      * Read an eeprom cell
      * @param address
@@ -45,7 +47,9 @@ class EepromHal_pro : public EepromHal {
 
 };
 
-extern EepromHal_pro EEPROMHAL;
+#define EepromHAL EepromHal_pro
+extern EepromHAL EEPROMHAL;
+
 #endif //ARDUINO_AVR_PRO
 
 #endif

@@ -4,9 +4,12 @@
 #include <Arduino.h>
 #include "eepromHAL.h"
 
+#if defined(ESP8266)
 class EepromHal_8266 : public EepromHal {
 
   public:
+
+		void init(void);
 
     /**
      * Read an eeprom cell
@@ -43,8 +46,10 @@ class EepromHal_8266 : public EepromHal {
 
 };
 
-#if defined(ESP8266)
-extern EepromHal_8266 EEPROMHAL;
+
+#define EepromHAL EepromHal_8266
+extern EepromHAL EEPROMHAL;
+
 #endif //ARDUINO_AVR_PRO
 
 #endif

@@ -1,3 +1,17 @@
+/*********************************************************************************/
+/*                                                                               */
+/*                           Libraries ToneHal                                   */
+/*                                                                               */
+/*  version    Date     Description                                              */
+/*    1.0    20/01/19                                                            */
+/*    1.1    24/01/19   Réecriture des classes                                   */
+/*                      répartition en plusieurs fichiers                        */
+/*    1.2    26/01/19   Modifications mineures                                   */
+/*    1.3    01/04/19   Ajout ESP32                                              */
+/*    1.3.1  02/04/19   Ajout fonction init                                      */
+/*    1.3.2  07/05/19   Ajout #include <DebugConfig.h> et EepromHAL EEPROMHAL;   */
+/*                                                                               */
+/*********************************************************************************/
 #ifndef eepromHAL_h
 #define eepromHAL_h
 
@@ -8,6 +22,8 @@
 class EepromHal  {
 
   public:
+
+	  virtual void init(void) = 0;
 
     /**
      * Read an eeprom cell
@@ -52,6 +68,20 @@ class EepromHal  {
 		
 #endif	// EEPROMHAL_EXTENDED	
 };
+
+#if defined(ESP8266)
+
+#elif defined(ESP32)
+#include "eepromHAL_ESP32.h"
+#elif defined(ARDUINO_ARCH_SAMD)
+#include "eepromHAL_M0.h"
+#elif defined(_BOARD_GENERIC_STM32F103C_H_)
+
+#elif defined(ARDUINO_AVR_PRO)
+#include "eepromHAL_PRO.h"
+#else
+
+#endif
 
 #endif
 	

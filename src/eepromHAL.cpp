@@ -8,6 +8,8 @@
 /*                      répartition en plusieurs fichiers                        */
 /*    1.2    26/01/19   Modifications mineures                                   */
 /*    1.3    01/04/19   Ajout ESP32                                              */
+/*    1.3.1  02/04/19   Ajout fonction init                                      */
+/*    1.3.2  07/05/19   Ajout #include <DebugConfig.h> et EepromHAL EEPROMHAL;   */
 /*                                                                               */
 /*********************************************************************************/
 

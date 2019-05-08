@@ -10,7 +10,7 @@ class EepromHal_ESP32 : public EepromHal {
 
   public:
 
-	  EepromHal_ESP32(void);
+	  void init(void);
 	
     /**
      * Read an eeprom cell
@@ -48,7 +48,8 @@ class EepromHal_ESP32 : public EepromHal {
 };
 
 
-extern EepromHal_ESP32 EEPROMHAL;
+#define EepromHAL EepromHal_ESP32
+extern EepromHAL EEPROMHAL;
 
 #endif //ESP32
 

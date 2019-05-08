@@ -1,16 +1,16 @@
 {
-  "name": "EepromHALL",
-  "description": "arduino abstraction library for eeprom management",
-  "keywords": "EepromHAL",
+  "name": "eepromHAL",
+  "description": "Library HAL for eeprom",
+  "keywords": "eepromHAL",
   "authors": {
     "name": "JPG63",
-    "url": ".com"
+    "url": ""
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/.git"
+    "url": "https://github.com/jpg63/EepromHAL.git"
   },
-  "version": "1.3.0",
+  "version": "1.3.2",
   "framework": "arduino",
   "platforms": ""
 }
