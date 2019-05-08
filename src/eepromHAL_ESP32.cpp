@@ -25,7 +25,7 @@
 
 #endif*/
 
-#define EEPROM_DEBUG
+//#define EEPROM_DEBUG
 
 #define EEPROM_SIZE 64
 
